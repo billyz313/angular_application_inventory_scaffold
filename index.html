@@ -1,5 +1,5 @@
 ﻿<!doctype html>
-<html class="no-js" lang="en" >
+<html class="no-js" lang="en" ng-app="prototypeApps">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,17 +16,27 @@ if (top.frames.length!=0)
     <script src="js/jquery-2.1.4.min.js"></script>
     <script src="js/foundation.js"></script>
     <script data-require="angular.js@1.2.x" src="https://code.angularjs.org/1.2.15/angular.js" data-semver="1.2.15"></script>
+    <script src="app.js"></script>
+    <script src="js/applications.js"></script>
     <script>
-            $(document).foundation();
+        $(document).foundation();
     </script>
 
     <style>
         blockquote {
             border-left: none;
         }
+
+        .ng-invalid.ng-dirty {
+            border-color: #FA787E;
+        }
+
+        .ng-valid.ng-dirty {
+            border-color: #78FA89;
+        }
     </style>
 </head>
-<body>
+<body ng-controller="prototypeController as prototype">
     <div class="top-bar" id="prototypeMenu">
         <div class="top-bar-left">
             <ul class="menu" data-responsive-menu="accordion">
@@ -59,21 +69,21 @@ if (top.frames.length!=0)
     </div>
     <div class="row small-up-1 medium-up-2 large-up-3">
         <!--  Application Container  -->
-        <div class="column" >
+        <div class="column" ng-repeat="application in prototype.applications">
             <div class="callout">
                 <!-- $index Practice:  -->
                 <p>
-                    <a href="#">name</a><em class="pull-right"></em>
+                    <a href="{{application.href}}">{{application.name }}</a><em class="pull-right"></em>
                 </p>
 
                 <!-- Image Gallery  -->
                 <div>
                     <div class="img-wrap">
-                        <a href="#"> <img src="http://placehold.it/400x370&text=Coming Soon" class="img-thumbnail center-block" /></a>
+                        <a href="{{application.href}}"> <img src="{{application.images[0]}}" class="img-thumbnail center-block" /></a>
                     </div>
-
                 </div>
-
+                <!-- Application Tabs  -->
+                <application-tabs></application-tabs>
             </div>
         </div>
     </div>
@@ -82,39 +92,35 @@ if (top.frames.length!=0)
     </div>
     <footer>
         <div class="row expanded callout secondary">
-            <div class="small-6 large-3 columns" >
+            <div class="small-6 large-3 columns">
                 <p class="lead">HUB Activities</p>
                 <ul class="menu vertical">
-                    <li><a href="https://www.servirglobal.net/Global/Activity-Mapper?hub=mesoamerica" >Mesoamerica</a></li>
-                    <li><a href="https://www.servirglobal.net/Global/Activity-Mapper?hub=africa" >Eastern &amp; Southern Africa</a></li>
-                    <li><a href="https://www.servirglobal.net/Global/Activity-Mapper?hub=himalaya" >Himalaya</a></li>
-                    <li><a href="https://www.servirglobal.net/Global/Activity-Mapper?hub=mekong" >Mekong</a></li>
+                    <li><a href="https://www.servirglobal.net/Global/Activity-Mapper?hub=mesoamerica">Mesoamerica</a></li>
+                    <li><a href="https://www.servirglobal.net/Global/Activity-Mapper?hub=africa">Eastern &amp; Southern Africa</a></li>
+                    <li><a href="https://www.servirglobal.net/Global/Activity-Mapper?hub=himalaya">Himalaya</a></li>
+                    <li><a href="https://www.servirglobal.net/Global/Activity-Mapper?hub=mekong">Mekong</a></li>
                 </ul>
             </div>
             <div class="small-6 large-3 columns">
                 <p class="lead ">Our Work</p>
                 <ul class="menu vertical">
-                    
-                    <li><a href="http://catalogue.servirglobal.net/" >Product Catalog</a></li>
-                    <li><a href="https://www.servirglobal.net/Global/Maps-Data/Data-Catalog" >Data Catalog</a></li>
-                    <li><a href="https://www.servirglobal.net/Global/Maps-Data/Interactive-Mapper" >Geoportal</a></li>
-                    <li><a href="https://www.servirglobal.net/data-maps/iserv/" >ISERV Imagery</a></li>
+                    <li><a href="http://catalogue.servirglobal.net/">Product Catalog</a></li>
+                    <li><a href="https://www.servirglobal.net/Global/Maps-Data/Data-Catalog">Data Catalog</a></li>
+                    <li><a href="https://www.servirglobal.net/Global/Maps-Data/Interactive-Mapper">Geoportal</a></li>
+                    <li><a href="https://www.servirglobal.net/data-maps/iserv/">ISERV Imagery</a></li>
                 </ul>
             </div>
             <div class="small-6 large-3 columns">
                 <p class="lead">About SERVIR</p>
                 <ul class="menu vertical">
-                    
-                    <li ><a href="https://www.servirglobal.net/about-servir" >About SERVIR</a></li>
-                    <li ><a href="https://www.servirglobal.net/Servir-ast" >SERVIR APPLIED SCIENCES TEAM</a></li>
-                    <li ><a href="https://www.servirglobal.net/about-servir#team" >Our Team</a></li>
+                    <li><a href="https://www.servirglobal.net/about-servir">About SERVIR</a></li>
+                    <li><a href="https://www.servirglobal.net/Servir-ast">SERVIR APPLIED SCIENCES TEAM</a></li>
+                    <li><a href="https://www.servirglobal.net/about-servir#team">Our Team</a></li>
                 </ul>
             </div>
             <div class="small-6 large-3 columns">
                 <p class="lead">Connect with us</p>
                 <ul class="menu vertical">
-
-
                     <li><a href="https://www.facebook.com/servirglobal"><i class="fi-social-facebook"></i>Facebook</a></li>
                     <li><a href="https://www.youtube.com/watch?v=SRSo93DP-dg"><i class="fi-social-youtube"></i>Youtube</a></li>
                     <li><a href="https://twitter.com/SERVIRGlobal"><i class="fi-social-twitter"></i>Twitter</a></li>
@@ -132,6 +138,5 @@ if (top.frames.length!=0)
             </div>
         </div>
     </footer>
-
 </body>
 </html>

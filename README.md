@@ -1,2 +1,2 @@
-# angular_application_inventory_scaffold
-Scaffold for the angular tutorial
+# angular_application_inventory
+Web application to manage application inventories built in angular
